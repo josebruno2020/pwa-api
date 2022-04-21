@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -34,8 +35,12 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->renderable(function (NotFound $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        });
+
         $this->reportable(function (Throwable $e) {
-            //
+
         });
     }
 }

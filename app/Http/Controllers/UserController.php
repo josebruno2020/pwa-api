@@ -17,8 +17,6 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-
-
     public function index(Request $request): JsonResponse
     {
         $users = $this->userService->getAllUsers();
@@ -40,7 +38,10 @@ class UserController extends Controller
         return $this->sendData($user);
     }
 
+    public function update(int $id)
+    {
 
+    }
 
 
     public function delete(int $id)

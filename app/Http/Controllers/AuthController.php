@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Models\User;
+use App\Services\AuthService;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+    private AuthService $authService;
+
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
         $this->middleware('auth:api', ['except' => ['login']]);
+        $this->authService = $authService;
     }
 
     /**
@@ -26,11 +33,11 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
-
-        return $this->respondWithToken($token);
+        $user = User::whereEmail($credentials['email'])->first();
+        return $this->respondWithToken($token, $user);
     }
 
     /**
@@ -43,12 +50,18 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
+    public function changePassword(int $id, ChangePasswordRequest $request)
+    {
+        $data = $request->validated();
+        $this->authService->changePassword($id, $data['password']);
+        return $this->sendData(
+            '',
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
+
+    public function logout(): JsonResponse
     {
         auth()->logout();
 
@@ -62,22 +75,17 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth()->refresh(), auth()->user());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
+
+    protected function respondWithToken(string $token, Authenticatable $user)
     {
         return response()->json([
+            'user' => $user,
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
 }

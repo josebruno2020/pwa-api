@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function () {
 
     Route::post('login', [AuthController::class, 'login']);
@@ -30,10 +29,20 @@ Route::group([
 
 });
 
-Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function () {
-    Route::get('', [UserController::class, 'index']);
-    Route::post('', [UserController::class, 'create']);
-    Route::get('{id}', [UserController::class, 'show']);
-    Route::put('{id}', [UserController::class, 'update']);
-    Route::delete('{id}', [UserController::class, 'delete']);
+Route::group(['middleware' => 'auth:api'], function () {
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('', [UserController::class, 'index']);
+        Route::post('', [UserController::class, 'create']);
+        Route::get('{id}', [UserController::class, 'show']);
+        Route::put('{id}', [UserController::class, 'update']);
+        Route::delete('{id}', [UserController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'patients'], function () {
+        Route::get('', [PatientController::class, 'index']);
+        Route::post('', [PatientController::class, 'create']);
+        Route::get('{id}', [PatientController::class, 'show']);
+    });
 });
+

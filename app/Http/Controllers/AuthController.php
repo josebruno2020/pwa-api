@@ -24,16 +24,12 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function login()
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
         $user = User::whereEmail($credentials['email'])->first();

@@ -2,15 +2,20 @@
 
 namespace App\Services;
 
+use App\Enums\PatientStatusEnum;
 use App\Models\Patient;
 use Facade\FlareClient\Http\Exceptions\NotFound;
 
 class PatientService
 {
 
-    public function getAllPatients(): array
+    public function getAllPatientsByStatus(int $patientStatus = PatientStatusEnum::OBSERVATION): array
     {
-        return Patient::query()->orderByDesc('id')->get()->toArray();
+        return Patient::query()
+            ->where('status', $patientStatus)
+            ->orderByDesc('id')
+            ->get()
+            ->toArray();
     }
 
     public function createPatient(array $data): array
@@ -29,4 +34,9 @@ class PatientService
 
         return $patient->toArray();
     }
+
+//    public function updateUser(int $userId, array $data): array
+//    {
+//
+//    }
 }

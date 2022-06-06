@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Patient
  *
  * @property int $id
+ * @property int $created_by
  * @property string $name
  * @property string $birthdate
  * @property string $name_mother
  * @property string $cns
- * @property string $cpf
- * @property string $rg
- * @property string $from_city
- * @property string $from_state
+ * @property string|null $cpf
+ * @property string|null $rg
+ * @property string|null $from_city
+ * @property string|null $from_state
  * @property string|null $phone_number
  * @property string|null $mobile_number
  * @property string|null $street
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $complement
  * @property string|null $neighborhood
  * @property string|null $city
+ * @property string|null $state
+ * @property int $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()
@@ -35,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereComplement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereCpf($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereFromCity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereFromState($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereId($value)
@@ -45,6 +49,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient wherePhoneNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereRg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereStreet($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereUpdatedAt($value)
  * @mixin \Eloquent
@@ -70,5 +76,7 @@ class Patient extends Model
         'complement',
         'neighborhood',
         'city',
+        'state',
+        'status'
     ];
 }

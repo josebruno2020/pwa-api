@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PatientStatusEnum;
 use App\Http\Requests\PatientCreateRequest;
 use App\Services\PatientService;
 use Illuminate\Http\JsonResponse;
@@ -17,9 +18,10 @@ class PatientController extends Controller
         $this->patientService = $patientService;
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $patients = $this->patientService->getAllPatients();
+        $status = $request->query->get('status', PatientStatusEnum::OBSERVATION);
+        $patients = $this->patientService->getAllPatientsByStatus($status);
         return $this->sendData($patients);
     }
 

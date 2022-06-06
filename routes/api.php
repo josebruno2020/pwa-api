@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExistentSicknessController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [PatientController::class, 'index']);
         Route::post('', [PatientController::class, 'create']);
         Route::get('{id}', [PatientController::class, 'show']);
+    });
+
+    Route::group(['prefix' => 'sickness'], function () {
+        Route::get('{patientId}', [ExistentSicknessController::class, 'find']);
+        Route::post('', [ExistentSicknessController::class, 'create']);
     });
 });
 

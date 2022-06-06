@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Facade\FlareClient\Http\Exceptions\NotFound;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserService
 {
@@ -22,7 +23,7 @@ class UserService
     {
         $user = User::find($id);
 
-        if (!$user) throw new NotFound("User not found", 404);
+        if (!$user) throw new NotFound("User not found", Response::HTTP_NOT_FOUND);
 
         return $user->toArray();
     }

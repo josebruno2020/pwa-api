@@ -5,7 +5,6 @@ namespace Services;
 use App\Models\ExistentSickness;
 use App\Models\Patient;
 use App\Services\ExistentSicknessService;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -42,6 +41,22 @@ class ExistentSicknessServiceTest extends TestCase
         $this->assertIsArray($sickness);
         $this->assertEquals(
             'ONE,TWO,THREE',
+            $sickness['sickness']
+        );
+        $this->assertDatabaseCount(ExistentSickness::class, 1);
+    }
+
+    public function testCreateExistentSicknessNullableSuccessfully()
+    {
+        $data = [
+            'patient_id' => Patient::query()->first()->id,
+            'sickness' => null,
+            'others' => null
+        ];
+        $sickness = $this->service->createSickness($data);
+
+        $this->assertIsArray($sickness);
+        $this->assertNull(
             $sickness['sickness']
         );
         $this->assertDatabaseCount(ExistentSickness::class, 1);

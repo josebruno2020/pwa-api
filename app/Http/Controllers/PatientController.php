@@ -49,6 +49,13 @@ class PatientController extends Controller
 
 
 
+    public function changeStatus(int $id): JsonResponse
+    {
+        // TODO
+    }
+
+
+
 
     public function update(Request $request, $id)
     {

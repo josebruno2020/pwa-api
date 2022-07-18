@@ -10,13 +10,17 @@ class ExistentSicknessService
 {
     public function createSickness(array $data): array
     {
-        $sickness =  ExistentSickness::create($this->makeSicknessModel($data));
+        $sickness = ExistentSickness::create($this->makeSicknessModel($data));
         return $sickness->toArray();
     }
 
     private function makeSicknessModel(array $data): array
     {
-        $sickness = count($data['sickness']) > 0 ? implode(',', $data['sickness']) : null;
+        $sickness = null;
+        if ($data['sickness']) {
+            $sickness = count($data['sickness']) > 0 ? implode(',', $data['sickness']) : null;
+        }
+
         return [
             'patient_id' => $data['patient_id'],
             'sickness' => $sickness,
@@ -27,7 +31,9 @@ class ExistentSicknessService
 
     public function findByPatient(int $patientId): array
     {
-        $sickness = ExistentSickness::query()->where('patient_id', $patientId)->first();
+        $sickness = ExistentSickness::query()
+            ->where('patient_id', $patientId)
+            ->orderByDesc('created_at')->first();
 
         if (!$sickness) throw new NotFound('Doença pre-existente não encontrada', Response::HTTP_NOT_FOUND);
 

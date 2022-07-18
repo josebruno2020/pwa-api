@@ -16,9 +16,11 @@ class CreateNurseReportsTable extends Migration
         Schema::create('nurse_reports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('patient_id')->unsigned();
             $table->text('report');
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('patient_id')->references('id')->on('patients');
             $table->timestamps();
         });
     }

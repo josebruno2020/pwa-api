@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
+use App\Http\Controllers\NurseReportController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VitalSignsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +52,23 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'sickness'], function () {
         Route::get('{patientId}', [ExistentSicknessController::class, 'find']);
         Route::post('', [ExistentSicknessController::class, 'create']);
+    });
+
+    Route::group(['prefix' => 'reports'], function () {
+        Route::group(['prefix' => 'nurse'], function () {
+            Route::post('', [NurseReportController::class, 'create']);
+            Route::get('{patientId}', [NurseReportController::class, 'getByPatient']);
+        });
+
+        Route::group(['prefix' => 'doctor'], function () {
+            Route::post('', [DoctorReportController::class, 'create']);
+            Route::get('{patientId}', [DoctorReportController::class, 'getByPatient']);
+        });
+    });
+
+    Route::group(['prefix' => 'vital-signs'], function () {
+        Route::post('', [VitalSignsController::class, 'create']);
+        Route::post('{patientId}', [VitalSignsController::class, 'getByPatient']);
     });
 });
 

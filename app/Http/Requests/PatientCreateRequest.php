@@ -39,7 +39,7 @@ class PatientCreateRequest extends FormRequest
             'complement'    => ['nullable'],
             'neighborhood'  => ['nullable'],
             'city'          => ['nullable'],
-
+            'state'         => ['nullable'],
         ];
     }
 }

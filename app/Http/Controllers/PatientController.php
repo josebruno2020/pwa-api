@@ -48,15 +48,6 @@ class PatientController extends Controller
     }
 
 
-
-    public function changeStatus(int $id): JsonResponse
-    {
-        // TODO
-    }
-
-
-
-
     public function update(Request $request, $id)
     {
         //
@@ -65,6 +56,7 @@ class PatientController extends Controller
 
     public function delete(int $id)
     {
-        //
+        $this->patientService->deletePatient($id);
+        return $this->sendData('', Response::HTTP_NO_CONTENT);
     }
 }

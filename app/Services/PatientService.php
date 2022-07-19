@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\PatientStatusEnum;
 use App\Models\Patient;
 use Facade\FlareClient\Http\Exceptions\NotFound;
+use Illuminate\Support\Facades\DB;
 
 class PatientService
 {
@@ -35,8 +36,21 @@ class PatientService
         return $patient->toArray();
     }
 
-//    public function updateUser(int $userId, array $data): array
-//    {
-//
-//    }
+    public function deletePatient(int $id): void
+    {
+        $patient = Patient::whereId($id)->first();
+
+        if(!$patient) throw new NotFound("Patient not found", 404);
+
+        DB::beginTransaction();
+
+        $patient->doctorReports()->delete();
+        $patient->nurseReports()->delete();
+        $patient->existentSicknesses()->delete();
+        $patient->vitalSigns()->delete();
+        $patient->delete();
+
+        DB::commit();
+
+    }
 }

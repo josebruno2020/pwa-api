@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Patient
@@ -29,6 +30,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DoctorReport[] $doctorReports
+ * @property-read int|null $doctor_reports_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ExistentSickness[] $existentSicknesses
+ * @property-read int|null $existent_sicknesses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NurseReport[] $nurseReports
+ * @property-read int|null $nurse_reports_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PatientStatusHistory[] $statusHistory
+ * @property-read int|null $status_history_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\VitalSign[] $vitalSigns
+ * @property-read int|null $vital_signs_count
  * @method static \Database\Factories\PatientFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newQuery()
@@ -80,4 +91,29 @@ class Patient extends Model
         'state',
         'status'
     ];
+
+    public function doctorReports(): HasMany
+    {
+        return $this->hasMany(DoctorReport::class);
+    }
+
+    public function nurseReports(): HasMany
+    {
+        return $this->hasMany(NurseReport::class);
+    }
+
+    public function vitalSigns(): HasMany
+    {
+        return $this->hasMany(VitalSign::class);
+    }
+
+    public function existentSicknesses(): HasMany
+    {
+        return $this->hasMany(ExistentSickness::class);
+    }
+
+    public function statusHistory(): HasMany
+    {
+        return $this->hasMany(PatientStatusHistory::class);
+    }
 }

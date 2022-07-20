@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\PatientStatusEnum;
 use App\Http\Requests\PatientCreateRequest;
+use App\Http\Requests\PatientRequest;
 use App\Services\PatientService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,11 +22,15 @@ class PatientController extends Controller
     public function index(Request $request): JsonResponse
     {
         $status = $request->query->get('status', PatientStatusEnum::OBSERVATION);
-        $patients = $this->patientService->getAllPatientsByStatus($status);
+        $search = $request->query->get('search', null);
+        if ($search) {
+            return $this->sendData(
+                $this->patientService->searchPatients($search)
+            );
+        }
+        $patients = $this->patientService->getAllPatientsByStatus($status, $search);
         return $this->sendData($patients);
     }
-
-
 
     public function create(PatientCreateRequest $request): JsonResponse
     {
@@ -38,8 +43,6 @@ class PatientController extends Controller
         );
     }
 
-
-
     public function show(int $id): JsonResponse
     {
         $patient = $this->patientService->getPatientById($id);
@@ -48,9 +51,11 @@ class PatientController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(PatientRequest $request, int $id): JsonResponse
     {
-        //
+        ['is_choosed' => $isChossedPatient] = $request->validated();
+        $patient = $this->patientService->updatePatient($id, $request->validated(), $isChossedPatient);
+        return $this->sendData($patient);
     }
 
 

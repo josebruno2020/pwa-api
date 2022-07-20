@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('', [PatientController::class, 'index']);
         Route::post('', [PatientController::class, 'create']);
         Route::get('{id}', [PatientController::class, 'show']);
+        Route::put('{id}', [PatientController::class, 'update']);
         Route::delete('{id}', [PatientController::class, 'delete']);
 
         Route::group(['prefix' => 'status-history'], function () {

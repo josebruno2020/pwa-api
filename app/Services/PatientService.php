@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\PatientStatusEnum;
 use App\Models\Patient;
 use Facade\FlareClient\Http\Exceptions\NotFound;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class PatientService
@@ -16,19 +17,25 @@ class PatientService
         $this->historyService = $historyService;
     }
 
-    public function getAllPatientsByStatus(int $patientStatus = PatientStatusEnum::OBSERVATION, ?int $page = 1, ?int $size = 10): array
+    public function getAllPatientsByStatus(int  $patientStatus = PatientStatusEnum::OBSERVATION,
+                                           ?int $page = 1,
+                                           ?int $size = 10
+    ): array|Collection
     {
-        return Patient::query()
+        $data = Patient::query()
             ->where('status', $patientStatus)
             ->orderByDesc('id')
-            ->get()
-            ->toArray();
+            ->paginate(perPage: $size, page: $page);
+
+        return new Collection($data);
+
+
     }
 
     public function searchPatients(string $search): array
     {
         return Patient::query()
-            ->where(function ($query) use($search) {
+            ->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%")
                     ->orWhere('name_mother', 'like', "%$search%");
             })

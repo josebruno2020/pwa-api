@@ -23,13 +23,18 @@ class PatientController extends Controller
     {
         $status = $request->query->get('status', PatientStatusEnum::OBSERVATION);
         $search = $request->query->get('search', null);
+        $page = $request->query->get('page', 1);
+        $size = $request->query->get('size', 10);
+
         if ($search) {
             return $this->sendData(
                 $this->patientService->searchPatients($search)
             );
         }
-        $patients = $this->patientService->getAllPatientsByStatus($status, $search);
-        return $this->sendData($patients);
+
+        return $this->sendData(
+            $this->patientService->getAllPatientsByStatus($status, $page, $size)
+        );
     }
 
     public function create(PatientCreateRequest $request): JsonResponse

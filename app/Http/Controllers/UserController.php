@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,20 +33,21 @@ class UserController extends Controller
 
 
 
-    public function show(int $id)
+    public function show(int $id): JsonResponse
     {
         $user = $this->userService->getUserById($id);
         return $this->sendData($user);
     }
 
-    public function update(int $id)
+    public function update(UserUpdateRequest $request, int $id): JsonResponse
     {
-
+        $user = $this->userService->updateUser($request->validated(), $id);
+        return $this->sendData($user);
     }
 
 
-    public function delete(int $id)
+    public function delete(int $id): JsonResponse
     {
-        //
+        //TODO delete user;
     }
 }

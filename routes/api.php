@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
 use App\Http\Controllers\NurseReportController;
@@ -77,6 +78,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'vital-signs'], function () {
         Route::post('', [VitalSignsController::class, 'create']);
         Route::get('{patientId}', [VitalSignsController::class, 'getByPatient']);
+    });
+
+    Route::group(['prefix' => 'chat'], function() {
+        Route::get('users', [ChatController::class, 'getUsers']);
+        Route::post('', [ChatController::class, 'sendMessage']);
     });
 });
 

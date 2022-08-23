@@ -51,6 +51,7 @@ class DoctorReport extends Model
     public function toArray()
     {
         return [
+            'id' => $this->id,
             'user_id' => $this->user_id,
             'patient_id' => $this->patient_id,
             'report' => $this->report,

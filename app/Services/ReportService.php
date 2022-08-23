@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Exceptions\ServiceException;
 use App\Models\DoctorReport;
 use App\Models\NurseReport;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Support\Facades\Auth;
 
 class ReportService
@@ -22,6 +24,35 @@ class ReportService
         return $model::wherePatientId($patientId)
             ->orderByDesc('created_at')
             ->get()->toArray();
+    }
+
+    public function updateReport(int $id, array $data,  string $type = 'nurse' | 'doctor'): array
+    {
+        $model = $this->setModel($type);
+        $report = $model::whereId($id)->first();
+        if (!$report) throw new NotFound('Relatório não encontrado');
+
+        if ($report->user_id !== Auth::user()->id) {
+            throw new ServiceException('Apenas o autor pode editar um relatório');
+        }
+
+        $report->update($data);
+
+        return $report->toArray();
+    }
+
+    public function deleteReport(int $id, string $type = 'nurse' | 'doctor'): void
+    {
+        $model = $this->setModel($type);
+        $report = $model::whereId($id)->first();
+
+        if (!$report) throw new NotFound('Relatório não encontrado');
+
+        if ($report->user_id !== Auth::user()->id) {
+            throw new ServiceException('Apenas o autor pode excluir um relatório');
+        }
+
+        $report->delete();
     }
 
 

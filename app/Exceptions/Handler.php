@@ -38,6 +38,10 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFound $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         });
+        $this->renderable(function (ServiceException $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode());
+        });
+
 
         $this->reportable(function (Throwable $e) {
 

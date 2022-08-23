@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
@@ -67,17 +68,27 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'nurse'], function () {
             Route::post('', [NurseReportController::class, 'create']);
             Route::get('{patientId}', [NurseReportController::class, 'getByPatient']);
+            Route::put('{id}', [NurseReportController::class, 'update']);
+            Route::delete('{id}', [NurseReportController::class, 'delete']);
         });
 
         Route::group(['prefix' => 'doctor'], function () {
             Route::post('', [DoctorReportController::class, 'create']);
             Route::get('{patientId}', [DoctorReportController::class, 'getByPatient']);
+            Route::put('{id}', [DoctorReportController::class, 'update']);
+            Route::delete('{id}', [DoctorReportController::class, 'delete']);
         });
     });
 
     Route::group(['prefix' => 'vital-signs'], function () {
         Route::post('', [VitalSignsController::class, 'create']);
         Route::get('{patientId}', [VitalSignsController::class, 'getByPatient']);
+        Route::put('{id}', [VitalSignsController::class, 'update']);
+        Route::delete('{id}', [VitalSignsController::class, 'delete']);
+    });
+
+    Route::group(['prefix' => 'charts'], function () {
+        Route::get('{patientId}', [ChartController::class, 'getByPatient']);
     });
 
     Route::group(['prefix' => 'chat'], function() {

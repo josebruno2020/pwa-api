@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReportCreateRequest;
+use App\Http\Requests\ReportUpdateRequest;
 use App\Services\ReportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,5 +28,17 @@ class NurseReportController extends Controller
     {
         $report = $this->nurseReportService->createReport($request->validated(), 'nurse');
         return $this->sendData($report, Response::HTTP_CREATED);
+    }
+
+    public function update(int $id, ReportUpdateRequest $request): JsonResponse
+    {
+        $report = $this->nurseReportService->updateReport($id, $request->validated(), 'nurse');
+        return $this->sendData($report);
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $this->nurseReportService->deleteReport($id, 'nurse');
+        return $this->sendData('', Response::HTTP_NO_CONTENT);
     }
 }

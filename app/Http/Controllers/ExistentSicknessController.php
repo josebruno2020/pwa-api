@@ -31,5 +31,11 @@ class ExistentSicknessController extends Controller
     }
 
 
+    public function update(int $id): JsonResponse
+    {
+        // TODO update existent sickness
+    }
+
+
 
 }

@@ -20,7 +20,9 @@ class UserController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $users = $this->userService->getAllUsers();
+        $page = $request->query->get('page', 1);
+        $size = $request->query->get('size', 10);
+        $users = $this->userService->getPaginatedUsers($page, $size);
         return $this->sendData($users);
     }
 

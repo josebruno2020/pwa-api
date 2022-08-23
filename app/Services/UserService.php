@@ -4,14 +4,18 @@ namespace App\Services;
 
 use App\Models\User;
 use Facade\FlareClient\Http\Exceptions\NotFound;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserService
 {
 
-    public function getAllUsers(): array
+    public function getPaginatedUsers(?int $page = 1, ?int $size = 10): array|Collection
     {
-        return User::query()->orderBy('id', 'desc')->get()->toArray();
+        $data =  User::query()->orderByDesc('id')
+            ->paginate(perPage: $size, page: $page);
+
+        return new Collection($data);
     }
 
     public function createUser(array $data): array

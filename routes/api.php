@@ -5,6 +5,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\NurseReportController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientStatusHistoryController;
@@ -33,6 +34,8 @@ Route::group([
     Route::post('change-password/{id}', [AuthController::class, 'changePassword']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+    Route::post('reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
 });
 

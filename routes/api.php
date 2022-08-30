@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AutoPersonalController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorReportController;
@@ -97,6 +98,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'chat'], function() {
         Route::get('users', [ChatController::class, 'getUsers']);
         Route::post('', [ChatController::class, 'sendMessage']);
+    });
+
+
+    Route::group(['prefix' => 'notifications'], function () {
+       Route::post('auto-personal', [AutoPersonalController::class, 'create']);
+       Route::get('auto-personal/{patientId}', [AutoPersonalController::class, 'getByPatient']);
     });
 });
 

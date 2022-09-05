@@ -22,11 +22,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $_0505
  * @property string|null $_06
  * @property string|null $_07
+ * @property string|null $_0705
  * @property string|null $_08
+ * @property string|null $_0805
  * @property string|null $_09
  * @property string|null $_10
  * @property string|null $_11
  * @property string|null $_12
+ * @property string|null $_1205
  * @property string|null $_13
  * @property string|null $_14
  * @property string|null $_15
@@ -55,7 +58,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $_36
  * @property string|null $_37
  * @property string|null $_38
- * @property array $_39
+ * @property string|null $_39
  * @property string|null $_3905
  * @property string|null $_40
  * @property string|null $_41
@@ -72,9 +75,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $_50
  * @property string|null $_51
  * @property string|null $_52
+ * @property string|null $_5205
  * @property string|null $_53
  * @property string|null $_54
  * @property string|null $_55
+ * @property string|null $_5505
  * @property string|null $_56
  * @property string|null $_5605
  * @property string|null $_57
@@ -102,6 +107,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $function
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $user_name
  * @property-read Patient $patient
  * @property-read User $user
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal newModelQuery()
@@ -115,11 +121,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where0505($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where06($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where07($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where0705($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where08($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where0805($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where09($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where10($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where11($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where12($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where1205($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where13($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where14($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where15($value)
@@ -165,9 +174,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where50($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where51($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where52($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where5205($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where53($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where54($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where55($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where5505($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where56($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where5605($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutoPersonal where57($value)
@@ -301,6 +312,8 @@ class AutoPersonal extends Model
         'function',
     ];
 
+    protected $appends = ['user_name'];
+
 
     public function user(): BelongsTo
     {
@@ -310,5 +323,10 @@ class AutoPersonal extends Model
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function getUserNameAttribute(): string
+    {
+        return $this->user->name;
     }
 }

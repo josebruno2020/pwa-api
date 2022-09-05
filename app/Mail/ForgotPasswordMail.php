@@ -34,8 +34,7 @@ class ForgotPasswordMail extends Mailable implements ShouldQueue
     {
         $link = config('app.front_url')."/resetar-senha/$this->token?email=$this->email";
         return $this
-            ->subject('Reset password')
-            ->from('teste@mail.com')
+            ->subject('Resetar senha')
             ->view('mail.verify', [
             'link' => $link
         ]);

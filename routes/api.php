@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AutoPersonalController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\Notification\AutoPersonalController;
+use App\Http\Controllers\Notification\IntoxicationController;
 use App\Http\Controllers\NurseReportController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientStatusHistoryController;
@@ -102,8 +103,16 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
     Route::group(['prefix' => 'notifications'], function () {
-       Route::post('auto-personal', [AutoPersonalController::class, 'create']);
-       Route::get('auto-personal/{patientId}', [AutoPersonalController::class, 'getByPatient']);
+        Route::group(['prefix' => 'auto-personal'], function () {
+            Route::post('', [AutoPersonalController::class, 'create']);
+            Route::get('{patientId}', [AutoPersonalController::class, 'getByPatient']);
+        });
+
+        Route::group(['prefix' => 'intoxication'], function () {
+            Route::post('', [IntoxicationController::class, 'create']);
+            Route::get('{patientId}', [IntoxicationController::class, 'getByPatient']);
+        });
+
     });
 });
 

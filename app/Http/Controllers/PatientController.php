@@ -28,12 +28,20 @@ class PatientController extends Controller
 
         if ($search) {
             return $this->sendData(
-                $this->patientService->searchPatients($search)
+                $this->patientService->searchPatientsPaginated($search, $page, $size)
             );
         }
 
         return $this->sendData(
             $this->patientService->getAllPatientsByStatus($status, $page, $size)
+        );
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $search = $request->query->get('search');
+        return $this->sendData(
+            $this->patientService->searchPatients($search)
         );
     }
 

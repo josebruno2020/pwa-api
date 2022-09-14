@@ -32,9 +32,23 @@ class PatientService
 
     }
 
+    public function searchPatientsPaginated(string $search, int $page, int $size): array|Collection
+    {
+        $data = Patient::query()
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('name_mother', 'like', "%$search%");
+            })
+            ->where('status', PatientStatusEnum::OBSERVATION)
+            ->orderByDesc('id')
+            ->paginate(perPage: $size, page: $page);
+
+        return new Collection($data);
+    }
+
     public function searchPatients(string $search): array
     {
-        return Patient::query()
+       return Patient::query()
             ->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%")
                     ->orWhere('name_mother', 'like', "%$search%");
@@ -42,7 +56,7 @@ class PatientService
             ->whereNotIn('status', [PatientStatusEnum::OBSERVATION, PatientStatusEnum::DIED])
             ->orderByDesc('id')
             ->get()
-            ->toArray();
+           ->toArray();
     }
 
     public function createPatient(array $data): array

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PatientStatusEnum;
 use App\Models\Patient;
 use App\Models\PatientStatusHistory;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,12 @@ class PatientStatusHistoryService
     {
         DB::beginTransaction();
         $statusHistory = PatientStatusHistory::create($data);
+        $patientStatus = PatientStatusEnum::OBSERVATION;
+        if (isset($data['is_alta'])) {
+            $patientStatus = PatientStatusEnum::HOME;
+        }
         Patient::whereId($data['patient_id'])->update(
-            ['status' => $data['status_to']]
+            ['status' => $patientStatus]
         );
         DB::commit();
         return $statusHistory->toArray();

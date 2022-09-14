@@ -27,7 +27,8 @@ class PatientStatusHistoryCreateRequest extends FormRequest
         return [
             'patient_id' => ['required', Rule::exists('patients', 'id')],
             'status_from' => ['required'],
-            'status_to' => ['required'],
+            'destiny' => ['required'],
+            'is_alta' => ['required'],
             'companion' => ['nullable'],
             'relationship' => ['nullable'],
             'obs' => ['nullable']

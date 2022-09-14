@@ -40,7 +40,8 @@ class PatientStatusHistory extends Model
     protected $fillable = [
         'patient_id',
         'status_from',
-        'status_to',
+        'destiny',
+        'is_alta',
         'companion',
         'relationship',
         'obs'

@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => 'patients'], function () {
         Route::get('', [PatientController::class, 'index']);
+        Route::get('search', [PatientController::class, 'search']);
         Route::post('', [PatientController::class, 'create']);
         Route::get('{id}', [PatientController::class, 'show']);
         Route::put('{id}', [PatientController::class, 'update']);
@@ -105,12 +106,18 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'notifications'], function () {
         Route::group(['prefix' => 'auto-personal'], function () {
             Route::post('', [AutoPersonalController::class, 'create']);
+            Route::get('show/{id}', [AutoPersonalController::class, 'show']);
             Route::get('{patientId}', [AutoPersonalController::class, 'getByPatient']);
+            Route::put('{id}', [AutoPersonalController::class, 'update']);
+            Route::delete('{id}', [AutoPersonalController::class, 'delete']);
         });
 
         Route::group(['prefix' => 'intoxication'], function () {
             Route::post('', [IntoxicationController::class, 'create']);
+            Route::get('show/{id}', [IntoxicationController::class, 'show']);
             Route::get('{patientId}', [IntoxicationController::class, 'getByPatient']);
+            Route::put('{id}', [IntoxicationController::class, 'update']);
+            Route::delete('{id}', [IntoxicationController::class, 'delete']);
         });
 
     });

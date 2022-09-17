@@ -56,6 +56,8 @@ return [
 
     'front_url' => env('APP_FRONT_URL', null),
 
+    'node_url' => env('NODE_API_URL', null),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*

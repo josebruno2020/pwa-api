@@ -11,7 +11,7 @@
     <body>
         <h1 align="center">Resetar a senha - Monintox</h1>
 
-        <p>Para resetar a sua senha, clique no botão abaixo</p>
+        <p>Para redefinir a sua senha, clique no botão abaixo</p>
 
         <a href="{{$link}}" target="_blank">
             <button>Clique aqui</button>

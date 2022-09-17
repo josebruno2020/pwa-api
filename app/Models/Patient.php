@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Notification\AutoPersonal;
+use App\Models\Notification\Intoxication;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -115,5 +117,15 @@ class Patient extends Model
     public function statusHistory(): HasMany
     {
         return $this->hasMany(PatientStatusHistory::class);
+    }
+
+    public function autoPersonalsNotification(): HasMany
+    {
+        return $this->hasMany(AutoPersonal::class);
+    }
+
+    public function intoxicationNotifications(): HasMany
+    {
+        return $this->hasMany(Intoxication::class);
     }
 }

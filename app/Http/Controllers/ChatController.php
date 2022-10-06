@@ -35,7 +35,9 @@ class ChatController extends Controller
 
     public function getChatMessages(Request $request): JsonResponse
     {
-        $messages = ChatService::getChatMessages($request->get('user_to'));
+        $userTo = $request->get('user_to');
+        $page = $request->get('page', 1);
+        $messages = ChatService::getChatMessages($userTo, $page);
         return $this->sendData($messages);
     }
 

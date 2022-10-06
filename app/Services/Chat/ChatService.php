@@ -23,14 +23,18 @@ class ChatService
         ])->toArray();
     }
 
-    public static function getChatMessages(int $userToId): array
+    public static function getChatMessages(int $userToId, int $page = 1): array|Collection
     {
         $userFromId = Auth::user()->id;
-        return ChatMessageModel::whereIn('user_from', [$userFromId, $userToId])
+        $data =  ChatMessageModel::whereIn('user_from', [$userFromId, $userToId])
             ->whereIn('user_to', [$userToId, $userFromId])
-            ->orderBy('id')
-            ->get()
-            ->toArray();
+            ->orderByDesc('id')
+            ->paginate(
+                perPage: 10,
+                page: $page
+            );
+
+        return new Collection($data);
     }
 
     public static function getTotalUnreadMessages(): array|Collection

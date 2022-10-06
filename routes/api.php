@@ -100,6 +100,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'chat'], function() {
         Route::get('users', [ChatController::class, 'getUsers']);
         Route::post('', [ChatController::class, 'sendMessage']);
+        Route::get('messages', [ChatController::class, 'getChatMessages']);
+        Route::get('unread', [ChatController::class, 'getUnreadMessages']);
+        Route::put('unread', [ChatController::class, 'updateUnread']);
     });
 
 

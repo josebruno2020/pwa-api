@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ChatMessage;
+use App\Events\Chat;
+use App\Http\Requests\ChatMessageRequest;
+use App\Models\ChatMessageModel;
 use App\Models\User;
+use App\Services\Chat\ChatService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,21 +26,29 @@ class ChatController extends Controller
         return $this->sendData($users);
     }
 
-    public function sendMessage(Request $request): JsonResponse|bool
+    public function sendMessage(ChatMessageRequest $request): JsonResponse|bool
     {
-        $message = [
-            "user" => Auth::user(),
-            "id" => $request->get('userId'),
-            "targetUserId" => $request->get('userId'),
-            "fromUserId" => Auth::user()->id,
-            "fromName" => Auth::user()->name,
-            "message" => $request->get('message'),
+        $chatMessage = ChatService::createMessage($request->validated());
+        broadcast(new Chat($chatMessage))->toOthers();
+        return $this->sendData($chatMessage);
+    }
 
+    public function getChatMessages(Request $request): JsonResponse
+    {
+        $messages = ChatService::getChatMessages($request->get('user_to'));
+        return $this->sendData($messages);
+    }
 
-            "chatId" => Auth::user()->id."-".$request->get('userId'),
-            "created_at" => Carbon::now()
-        ];
-        broadcast(new ChatMessage($message))->toOthers();
-        return $this->sendData($message);
+    public function getUnreadMessages(): JsonResponse
+    {
+        $unreadMessages = ChatService::getTotalUnreadMessages();
+        return $this->sendData($unreadMessages);
+    }
+
+    public function updateUnread(Request $request): JsonResponse
+    {
+        $userFrom = $request->get('user_from');
+        ChatService::updateUnreadMessages($userFrom);
+        return $this->sendData('', Response::HTTP_NO_CONTENT);
     }
 }

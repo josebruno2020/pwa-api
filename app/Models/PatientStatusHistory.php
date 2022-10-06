@@ -12,19 +12,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $patient_id
  * @property int $status_from
- * @property int $status_to
+ * @property int|null $status_to
  * @property string|null $companion
  * @property string|null $relationship
  * @property string|null $obs
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $destiny
+ * @property int $is_alta
  * @property-read \App\Models\Patient $patient
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory query()
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereCompanion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereDestiny($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereIsAlta($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereObs($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory wherePatientId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PatientStatusHistory whereRelationship($value)

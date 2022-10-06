@@ -32,10 +32,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|AutoPersonal[] $autoPersonalsNotification
+ * @property-read int|null $auto_personals_notification_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DoctorReport[] $doctorReports
  * @property-read int|null $doctor_reports_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ExistentSickness[] $existentSicknesses
  * @property-read int|null $existent_sicknesses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Intoxication[] $intoxicationNotifications
+ * @property-read int|null $intoxication_notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\NurseReport[] $nurseReports
  * @property-read int|null $nurse_reports_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PatientStatusHistory[] $statusHistory

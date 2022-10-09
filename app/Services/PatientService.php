@@ -32,14 +32,14 @@ class PatientService
 
     }
 
-    public function searchPatientsPaginated(string $search, int $page, int $size): array|Collection
+    public function searchPatientsPaginated(string $search, int $page, int $size, int $status = PatientStatusEnum::OBSERVATION): array|Collection
     {
         $data = Patient::query()
             ->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%")
                     ->orWhere('name_mother', 'like', "%$search%");
             })
-            ->where('status', PatientStatusEnum::OBSERVATION)
+            ->where('status', $status)
             ->orderByDesc('id')
             ->paginate(perPage: $size, page: $page);
 

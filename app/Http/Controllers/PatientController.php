@@ -28,7 +28,7 @@ class PatientController extends Controller
 
         if ($search) {
             return $this->sendData(
-                $this->patientService->searchPatientsPaginated($search, $page, $size)
+                $this->patientService->searchPatientsPaginated($search, $page, $size, $status)
             );
         }
 

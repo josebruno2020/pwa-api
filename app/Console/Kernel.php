@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
         $schedule->command(DeleteReports::class)->daily();
 
         $schedule->command(DeletePatientCron::class)->hourly();
+
+        $schedule->command('websockets:clean')->daily();
     }
 
     /**

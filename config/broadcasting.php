@@ -40,8 +40,8 @@ return [
                 'useTLS' => true,
                 'host' => 'api.monintox.online',
                 'encrypted' => true,
-                'port' => 443,
-//                'port' => 6001,
+//                'port' => 443,
+                'port' => 6000,
                 'scheme' => 'https'
             ],
         ],

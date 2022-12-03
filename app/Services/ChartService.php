@@ -23,12 +23,14 @@ class ChartService
 
         $nurseReport = $this->reportService->getByPatient($patientId, 'nurse');
         $doctorReport = $this->reportService->getByPatient($patientId, 'doctor');
+        $evolution = $this->reportService->getByPatient($patientId, 'evolution');
         $vitalSigns = $this->vitalSignsService->getByPatient($patientId);
 
         return [
             'nurseReport' => $nurseReport,
             'doctorReport' => $doctorReport,
-            'vitalSigns' => $vitalSigns
+            'vitalSigns' => $vitalSigns,
+            'evolution' => $evolution
         ];
     }
 }

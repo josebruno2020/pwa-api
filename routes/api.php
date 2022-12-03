@@ -8,6 +8,7 @@ use App\Http\Controllers\ExistentSicknessController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Notification\AutoPersonalController;
 use App\Http\Controllers\Notification\IntoxicationController;
+use App\Http\Controllers\NurseEvolutionController;
 use App\Http\Controllers\NurseReportController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientStatusHistoryController;
@@ -83,6 +84,14 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('{patientId}', [DoctorReportController::class, 'getByPatient']);
             Route::put('{id}', [DoctorReportController::class, 'update']);
             Route::delete('{id}', [DoctorReportController::class, 'delete']);
+        });
+
+
+        Route::group(['prefix' => 'evolution'], function () {
+            Route::post('', [NurseEvolutionController::class, 'create']);
+            Route::get('{patientId}', [NurseEvolutionController::class, 'getByPatient']);
+            Route::put('{id}', [NurseEvolutionController::class, 'update']);
+            Route::delete('{id}', [NurseEvolutionController::class, 'delete']);
         });
     });
 

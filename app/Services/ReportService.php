@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Exceptions\ServiceException;
 use App\Models\DoctorReport;
+use App\Models\NurseEvolution;
 use App\Models\NurseReport;
 use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Support\Facades\Auth;
 
 class ReportService
 {
-    public function createReport(array $data, string $type = 'nurse' | 'doctor'): array
+    public function createReport(array $data, string $type = 'nurse' | 'doctor' | 'evolution'): array
     {
         $model = $this->setModel($type);
         $data['user_id'] = Auth::user()->id;
@@ -18,7 +19,7 @@ class ReportService
     }
 
 
-    public function getByPatient(int $patientId, string $type = 'nurse' | 'doctor'): array
+    public function getByPatient(int $patientId, string $type = 'nurse' | 'doctor' | 'evolution'): array
     {
         $model = $this->setModel($type);
         return $model::wherePatientId($patientId)
@@ -26,7 +27,7 @@ class ReportService
             ->get()->toArray();
     }
 
-    public function updateReport(int $id, array $data,  string $type = 'nurse' | 'doctor'): array
+    public function updateReport(int $id, array $data,  string $type = 'nurse' | 'doctor' | 'evolution'): array
     {
         $model = $this->setModel($type);
         $report = $model::whereId($id)->first();
@@ -41,7 +42,7 @@ class ReportService
         return $report->toArray();
     }
 
-    public function deleteReport(int $id, string $type = 'nurse' | 'doctor'): void
+    public function deleteReport(int $id, string $type = 'nurse' | 'doctor' | 'evolution'): void
     {
         $model = $this->setModel($type);
         $report = $model::whereId($id)->first();
@@ -56,11 +57,12 @@ class ReportService
     }
 
 
-    private function setModel(string $type = 'nurse' | 'doctor'): NurseReport|DoctorReport
+    private function setModel(string $type = 'nurse' | 'doctor' | 'evolution'): NurseReport|DoctorReport|NurseEvolution
     {
         return match ($type) {
             'nurse' => new NurseReport(),
-            'doctor' => new DoctorReport()
+            'doctor' => new DoctorReport(),
+            'evolution' => new NurseEvolution()
         };
     }
 }

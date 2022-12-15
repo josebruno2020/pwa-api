@@ -25,10 +25,10 @@ class PatientCreateRequest extends FormRequest
     {
         return [
             'name'          => ['required'],
-            'birthdate'     => ['required', 'date'],
-            'name_mother'   => ['required'],
+            'birthdate'     => ['nullable', 'date'],
+            'name_mother'   => ['nullable'],
             'cns'           => ['nullable'],
-            'cpf'           => ['required'],
+            'cpf'           => ['nullable'],
             'rg'            => ['nullable'],
             'from_city'     => ['nullable'],
             'from_state'    => ['nullable'],

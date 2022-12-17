@@ -132,4 +132,14 @@ class Patient extends Model
     {
         return $this->hasMany(Intoxication::class);
     }
+
+    public function evolutions(): HasMany
+    {
+        return $this->hasMany(NurseEvolution::class);
+    }
+
+    public function conducts(): HasMany
+    {
+        return $this->hasMany(Conduct::class);
+    }
 }

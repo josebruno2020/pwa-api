@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConductController;
 use App\Http\Controllers\DoctorReportController;
 use App\Http\Controllers\ExistentSicknessController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -92,6 +93,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('{patientId}', [NurseEvolutionController::class, 'getByPatient']);
             Route::put('{id}', [NurseEvolutionController::class, 'update']);
             Route::delete('{id}', [NurseEvolutionController::class, 'delete']);
+        });
+
+        Route::group(['prefix' => 'conducts'], function () {
+            Route::post('', [ConductController::class, 'create']);
+            Route::get('{patientId}', [ConductController::class, 'getByPatient']);
+            Route::put('{id}', [ConductController::class, 'update']);
+            Route::delete('{id}', [ConductController::class, 'delete']);
         });
     });
 

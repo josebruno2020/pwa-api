@@ -115,6 +115,8 @@ class PatientService
         $patient->statusHistory()->delete();
         $patient->autoPersonalsNotification()->delete();
         $patient->intoxicationNotifications()->delete();
+        $patient->evolutions()->delete();
+        $patient->conducts()->delete();
         $patient->delete();
 
         DB::commit();

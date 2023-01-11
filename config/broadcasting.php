@@ -38,11 +38,15 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => true,
-                'host' => 'api.monintox.online',
+                'host' => 'www.api.monintox.online',
                 'encrypted' => true,
 //                'port' => 443,
-                'port' => 6000,
-                'scheme' => 'https'
+                'port' => 8443,
+                'scheme' => 'https',
+                'curl_options' => [
+                    CURLOPT_SSL_VERIFYHOST => 0,
+                    CURLOPT_SSL_VERIFYPEER => 0
+                ]
             ],
         ],
 

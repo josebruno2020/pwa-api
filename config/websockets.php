@@ -31,6 +31,7 @@ return [
             'capacity' => null,
             'enable_client_messages' => true,
             'enable_statistics' => true,
+            'encrypted' => true,
         ],
     ],
 
@@ -116,13 +117,13 @@ return [
          * certificate chain of issuers. The private key also may be contained
          * in a separate file specified by local_pk.
          */
-        'local_cert' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_CERT', ' /etc/letsencrypt/live/api.monintox.online/fullchain.pem'),
+        'local_cert' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_CERT', '/etc/letsencrypt/live/api.monintox.online/fullchain.pem'),
 
         /*
          * Path to local private key file on filesystem in case of separate files for
          * certificate (local_cert) and private key.
          */
-        'local_pk' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_PK', ' /etc/letsencrypt/live/api.monintox.online/privkey.pem'),
+        'local_pk' => env('LARAVEL_WEBSOCKETS_SSL_LOCAL_PK', '/etc/letsencrypt/live/api.monintox.online/privkey.pem'),
 
         /*
          * Passphrase for your local_cert file.

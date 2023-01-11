@@ -29,6 +29,8 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'enable_client_messages' => true,
             'enable_statistics' => true,
+            'encrypted' => true,
+            'capacity' => null,
         ],
     ],
 
@@ -128,6 +130,8 @@ return [
         'passphrase' => env('LARAVEL_WEBSOCKETS_SSL_PASSPHRASE', null),
 
         'verify_peer' => false,
+
+        'allow_self_signed' => true,
     ],
 
     /*

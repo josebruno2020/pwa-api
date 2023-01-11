@@ -41,7 +41,7 @@ return [
                 'host' => 'www.api.monintox.online',
                 'encrypted' => true,
 //                'port' => 443,
-                'port' => 8443,
+                'port' => 6001,
                 'scheme' => 'https',
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,

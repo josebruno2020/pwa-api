@@ -38,7 +38,7 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
 //                'useTLS' => true,
-                'host' => '127.0.0.1',
+                'host' => 'api.monintox.online',
                 'encrypted' => true,
 //                'port' => 443,
                 'port' => 6001,

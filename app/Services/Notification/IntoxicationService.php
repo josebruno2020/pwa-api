@@ -39,6 +39,9 @@ class IntoxicationService
 
     private static function keyToString(array $data): string
     {
+        if (!isset($data[0])) {
+            return '';
+        }
         return implode(',', $data);
     }
 
